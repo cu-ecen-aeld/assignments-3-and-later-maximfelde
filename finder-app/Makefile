@@ -6,6 +6,5 @@ endif
 
 writer: writer.c
 	$(CC) writer.c -o writer
-	file writer > ../assignments/assignment2/fileresult.txt
 clean: writer
 	rm writer
