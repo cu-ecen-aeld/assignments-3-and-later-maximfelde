@@ -1,4 +1,12 @@
 #include "systemcalls.h"
+#include <sys/syscall.h>
+#include "stdlib.h"
+#include <sys/types.h>
+#include <unistd.h>
+#include <wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 /**
  * @param cmd the command to execute with system()
@@ -15,7 +23,18 @@ bool do_system(const char *cmd)
  *  Call the system() function with the command set in the cmd
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
-*/
+*/ 
+	int ret = system(cmd);
+	if (ret == -1)
+	{
+		perror("system() call failed");
+		return false;
+	}
+	if (ret > 0)
+	{
+		perror("Command execution returned with status not zero");
+		return false;
+	}
 
     return true;
 }
@@ -36,6 +55,7 @@ bool do_system(const char *cmd)
 
 bool do_exec(int count, ...)
 {
+    fflush(stdout);
     va_list args;
     va_start(args, count);
     char * command[count+1];
@@ -44,22 +64,44 @@ bool do_exec(int count, ...)
     {
         command[i] = va_arg(args, char *);
     }
-    command[count] = NULL;
-    // this line is to avoid a compile warning before your implementation is complete
-    // and may be removed
-    command[count] = command[count];
+    
+	command[count] = NULL;
+	va_end(args);   
+	
+	int status;
+	pid_t pid;
+	pid = fork();
+	int ret;
+	if (pid == -1)
+	{
+		perror("Forking has failed");
+		va_end(args);
+		return false;
+	}
+	else if (pid == 0)
+	{	
+		ret = execv(command[0], command);
+		if (ret == -1)
+		{		
+			perror("Child: exec() failed");
+		}
+		exit(1);
+	}
+	
+	
+	if (wait( &status) == -1)
+	{
+		perror("wait returns error");
+		return false;		
+	}
 
-/*
- * TODO:
- *   Execute a system command by calling fork, execv(),
- *   and wait instead of system (see LSP page 161).
- *   Use the command[0] as the full path to the command to execute
- *   (first argument to execv), and use the remaining arguments
- *   as second argument to the execv() command.
- *
-*/
 
-    va_end(args);
+	if (  WEXITSTATUS ( status))
+	{
+		perror(" Command exit status is not zero");
+		return false;
+	}
+	
 
     return true;
 }
@@ -71,6 +113,8 @@ bool do_exec(int count, ...)
 */
 bool do_exec_redirect(const char *outputfile, int count, ...)
 {
+
+    fflush(stdout);
     va_list args;
     va_start(args, count);
     char * command[count+1];
@@ -80,20 +124,55 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
         command[i] = va_arg(args, char *);
     }
     command[count] = NULL;
-    // this line is to avoid a compile warning before your implementation is complete
-    // and may be removed
-    command[count] = command[count];
 
-
-/*
- * TODO
- *   Call execv, but first using https://stackoverflow.com/a/13784315/1446624 as a refernce,
- *   redirect standard out to a file specified by outputfile.
- *   The rest of the behaviour is same as do_exec()
- *
-*/
-
+	fflush(stdout);
+	printf("This is redirect function\n");
+   
     va_end(args);
+    
+ 
+    int fd = creat( outputfile, 0644);
+    if (fd == -1)
+    {
+        perror("File could not be opened");
+        return false;
+    }
+    int status;
+	pid_t pid;
+	int ret;
+
+	
+	switch (pid = fork())
+	{
+	    case -1:	
+	    	perror("Forking has failed");
+	    	close(fd);
+            return false;
+		case 0:
+	        if (dup2(fd, 1) < 0) 
+	        { 
+    	        perror("dup2 failed");
+                close(fd);                
+                return false;
+            }
+    		ret = execv(command[0], command);
+    		if (ret == -1)
+	       	{		
+			    perror("Child: exec() failed");
+		    }
+	    default:
+	    close(fd);		
+    	if (wait( &status) == -1)
+	    {
+	    	perror("wait returns error");
+	    	return false;		
+	    }
+    	if (  WEXITSTATUS ( status))
+       	{
+		    perror(" Command exit status is not zero");
+	    	return false;
+	    }
+    }	
 
     return true;
 }
