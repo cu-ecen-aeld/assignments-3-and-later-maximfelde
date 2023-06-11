@@ -1,8 +1,4 @@
-ifeq ($(CROSS_COMPILE), aarch64-none-linux-gnu-)
-	CC=/home/maxim/gcc-arm-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-gcc
-else
-	CC=gcc
-endif
+CC=${CROSS_COMPILE}gcc
 
 writer: writer.c
 	$(CC) writer.c -o writer
