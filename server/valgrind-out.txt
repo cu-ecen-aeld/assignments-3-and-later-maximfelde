@@ -1,0 +1,144 @@
+==41190== Memcheck, a memory error detector
+==41190== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41190== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==41190== Command: ./aesdsocket
+==41190== Parent PID: 41188
+==41190== 
+--41190-- 
+--41190-- Valgrind options:
+--41190--    --error-exitcode=1
+--41190--    --leak-check=full
+--41190--    --show-leak-kinds=all
+--41190--    --track-origins=yes
+--41190--    --errors-for-leak-kinds=definite
+--41190--    --verbose
+--41190--    --log-file=valgrind-out.txt
+--41190-- Contents of /proc/version:
+--41190--   Linux version 5.15.0-73-generic (buildd@bos03-amd64-038) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #80~20.04.1-Ubuntu SMP Wed May 17 14:58:14 UTC 2023
+--41190-- 
+--41190-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3
+--41190-- Page sizes: currently 4096, max supported 4096
+--41190-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--41190-- Reading syms from /home/maxim/assignment-1-maximfelde/server/aesdsocket
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--41190--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
+--41190--   .. build-id is valid
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--41190--    object doesn't have a symbol table
+--41190--    object doesn't have a dynamic symbol table
+--41190-- Scheduler: using generic scheduler lock implementation.
+--41190-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==41190== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-41190-by-maxim-on-???
+==41190== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-41190-by-maxim-on-???
+==41190== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-41190-by-maxim-on-???
+==41190== 
+==41190== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==41190== don't want to do, unless you know exactly what you're doing,
+==41190== or are doing some strange experiment):
+==41190==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=41190 ...command...
+==41190== 
+==41190== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==41190==   /path/to/gdb ./aesdsocket
+==41190== and then give GDB the following command
+==41190==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=41190
+==41190== --pid is optional if only one valgrind process is running
+==41190== 
+--41190-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--41190-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--41190--    object doesn't have a symbol table
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--41190--    object doesn't have a symbol table
+==41190== WARNING: new redirection conflicts with existing -- ignoring it
+--41190--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--41190--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--41190-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--41190-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--41190--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
+--41190--   .. build-id is valid
+--41190-- REDIR: 0x48fa480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa7b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f90a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f97e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fbc50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4916ce0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4916820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa5e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x49167e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f91d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4917f50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4916860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4902bb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa3d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x4916930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48f9ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa6f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fbc90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x48fa8a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--41190-- REDIR: 0x490b8c0 (libc.so.6:__strrchr_sse2) redirected to 0x483ea70 (__strrchr_sse2)
+--41190-- REDIR: 0x4915f00 (libc.so.6:__memset_sse2_unaligned) redirected to 0x48428e0 (memset)
+--41190-- REDIR: 0x490b480 (libc.so.6:__strchr_sse2) redirected to 0x483eb90 (__strchr_sse2)
+--41190-- REDIR: 0x490bbc0 (libc.so.6:__strlen_sse2) redirected to 0x483efa0 (__strlen_sse2)
+--41190-- REDIR: 0x49d8cc0 (libc.so.6:__strncmp_sse42) redirected to 0x483f7c0 (__strncmp_sse42)
+--41190-- REDIR: 0x48f40e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--41190-- REDIR: 0x48f9fa0 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
+--41190-- REDIR: 0x4905ec0 (libc.so.6:__memchr_sse2) redirected to 0x4840050 (memchr)
+--41190-- REDIR: 0x4915ad0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4840100 (memcpy@GLIBC_2.2.5)
+--41190-- REDIR: 0x490b6b0 (libc.so.6:__strchrnul_sse2) redirected to 0x4843540 (strchrnul)
+--41190-- REDIR: 0x4915ab0 (libc.so.6:__mempcpy_sse2_unaligned) redirected to 0x4843660 (mempcpy)
+--41190-- REDIR: 0x49db850 (libc.so.6:__strncasecmp_sse42) redirected to 0x483f910 (strncasecmp)
+--41190-- REDIR: 0x48f46d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
+--41190-- REDIR: 0x49043b0 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x483fed0 (strcmp)
+--41190-- REDIR: 0x48f5b10 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
+--41190-- REDIR: 0x49dd960 (libc.so.6:__strpbrk_sse42) redirected to 0x4843da0 (strpbrk)
+--41190-- REDIR: 0x4912140 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4842570 (__stpcpy_sse2_unaligned)
+--41190-- Reading syms from /usr/lib/x86_64-linux-gnu/libnss_files-2.31.so
+--41190--   Considering /usr/lib/debug/.build-id/45/da81f0ac3660e3c3cb947c6244151d879ed9e8.debug ..
+--41190--   .. build-id is valid
+--41190-- REDIR: 0x4910b00 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x483f090 (strcpy)
+--41190-- REDIR: 0x49d9ca0 (libc.so.6:__strcasecmp_sse42) redirected to 0x483f830 (strcasecmp)
+--41190-- REDIR: 0x49e7550 (libc.so.6:__memcmp_sse4_1) redirected to 0x4842150 (__memcmp_sse4_1)
+--41190-- REDIR: 0x48f4e80 (libc.so.6:realloc) redirected to 0x483df30 (realloc)
+==41190== Conditional jump or move depends on uninitialised value(s)
+==41190==    at 0x483EFB8: __strlen_sse2 (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41190==    by 0x48D2D14: __vfprintf_internal (vfprintf-internal.c:1688)
+==41190==    by 0x48BBD3E: printf (printf.c:33)
+==41190==    by 0x109A49: main (in /home/maxim/assignment-1-maximfelde/server/aesdsocket)
+==41190==  Uninitialised value was created by a stack allocation
+==41190==    at 0x109576: main (in /home/maxim/assignment-1-maximfelde/server/aesdsocket)
+==41190== 
+--41190-- Discarding syms at 0x4e525c0-0x4e58a1c in /usr/lib/x86_64-linux-gnu/libnss_files-2.31.so (have_dinfo 1)
+==41190== 
+==41190== HEAP SUMMARY:
+==41190==     in use at exit: 0 bytes in 0 blocks
+==41190==   total heap usage: 103 allocs, 103 frees, 130,205 bytes allocated
+==41190== 
+==41190== All heap blocks were freed -- no leaks are possible
+==41190== 
+==41190== ERROR SUMMARY: 5 errors from 1 contexts (suppressed: 0 from 0)
+==41190== 
+==41190== 5 errors in context 1 of 1:
+==41190== Conditional jump or move depends on uninitialised value(s)
+==41190==    at 0x483EFB8: __strlen_sse2 (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41190==    by 0x48D2D14: __vfprintf_internal (vfprintf-internal.c:1688)
+==41190==    by 0x48BBD3E: printf (printf.c:33)
+==41190==    by 0x109A49: main (in /home/maxim/assignment-1-maximfelde/server/aesdsocket)
+==41190==  Uninitialised value was created by a stack allocation
+==41190==    at 0x109576: main (in /home/maxim/assignment-1-maximfelde/server/aesdsocket)
+==41190== 
+==41190== ERROR SUMMARY: 5 errors from 1 contexts (suppressed: 0 from 0)
