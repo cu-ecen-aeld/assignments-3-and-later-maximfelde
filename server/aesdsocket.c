@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <errno.h>
 #include <syslog.h>
@@ -23,6 +22,7 @@
 FILE *output_file;
 //char output_file_location[] = "aesdsocketdata.txt";
 char output_file_location[] = "/tmp/var/aesdsocketdata";
+char pathname[]="/tmp/var/";
 int s, new_fd;
 struct addrinfo *servinfo;  // will point to the results
 
@@ -56,6 +56,7 @@ int main (int argc, char *argv[])
 {
 
     openlog(NULL,0,LOG_USER);
+    mkdir(pathname, S_IRWXU | S_IRWXG | S_IRWXO);
 
     int status, numbytes;
     struct addrinfo hints;
