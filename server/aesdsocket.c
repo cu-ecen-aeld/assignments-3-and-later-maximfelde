@@ -19,12 +19,13 @@
 
 //#define DEBUG
 
-FILE *output_file;
+FILE *output_file = NULL;
 //char output_file_location[] = "aesdsocketdata.txt";
 char output_file_location[] = "/tmp/var/aesdsocketdata";
 char pathname[]="/tmp/var/";
-int s, new_fd;
-struct addrinfo *servinfo;  // will point to the results
+int s = -1;
+int new_fd = -1;
+struct addrinfo *servinfo = NULL;  // will point to the results
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -41,7 +42,7 @@ static void signal_handler (int signo)
     if ((signo == SIGINT) || (signo == SIGTERM))
     {
         syslog(LOG_INFO | LOG_DEBUG, "Caught signal, exiting");
-        printf("\nCaught signal, exiting\n");
+        printf("Caught signal, exiting\n");
 
         remove(output_file_location);
         close(new_fd);
@@ -58,7 +59,7 @@ int main (int argc, char *argv[])
     openlog(NULL,0,LOG_USER);
     mkdir(pathname, S_IRWXU | S_IRWXG | S_IRWXO);
 
-    int status, numbytes;
+    int status, numbytes = 0;
     struct addrinfo hints;
    
     struct sockaddr_storage their_addr;
@@ -126,7 +127,7 @@ int main (int argc, char *argv[])
     if ((argc > 1 )){
     if (!strcmp(argv[1] , "-d"))
     {        
-        printf("Forking");
+        printf("Forking \n\r");
         daemon_is_invoced = 1;
         parent = fork();        
     }
@@ -134,7 +135,7 @@ int main (int argc, char *argv[])
 
     if (daemon_is_invoced && parent)
     {
-        printf("Starting daemon and exit.");
+        printf("Starting daemon and exit. \n\r");
         freeaddrinfo(servinfo);
         close(s);
         exit(EXIT_SUCCESS);
@@ -173,14 +174,14 @@ int main (int argc, char *argv[])
         {   
             if (numbytes > 0) { 
                 buf[numbytes] = '\0';
-                printf ("Recieved: %s", buf);
+                //printf ("Recieved: %s", buf);
                 output_file = fopen(output_file_location, "a");
                 fprintf(output_file, "%s", buf);
                 buf[0] = '\0';
                 fclose(output_file);
                 output_file = fopen(output_file_location, "r");
                 size_t size = fread(file_buf, 1, MAXFILESIZE, output_file);
-                printf("File contance:%s. Lenght:%lu", file_buf, size);
+                //printf("File contance:%s. Lenght:%lu", file_buf, size);
                 
                 fclose(output_file);                    
                 send(new_fd,file_buf, size, 0);
@@ -188,6 +189,7 @@ int main (int argc, char *argv[])
         }
         if (numbytes == 0)
         {
+            syslog(LOG_DEBUG | LOG_INFO, "Connection closed from: %s\n", ipstr);
             printf("Connection closed from: %s\n", ipstr);
 
         }
